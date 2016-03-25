@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.model;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
  * GKislin
  * 11.01.2015.
  */
+@Entity
 public class UserMeal extends BaseEntity {
 
     private LocalDateTime dateTime;
