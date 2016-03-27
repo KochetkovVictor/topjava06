@@ -1,8 +1,6 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -10,12 +8,14 @@ import java.time.LocalDateTime;
  * 11.01.2015.
  */
 @Entity
+@Table(name="meals")
 public class UserMeal extends BaseEntity {
 
+    @Column(name="date_time")
     private LocalDateTime dateTime;
-
+    @Column
     private String description;
-
+    @Column
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
