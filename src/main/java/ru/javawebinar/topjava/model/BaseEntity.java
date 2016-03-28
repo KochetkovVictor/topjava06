@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * User: gkislin
@@ -8,7 +9,7 @@ import javax.persistence.*;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseEntity {
+public class BaseEntity{
     public static final int START_SEQ = 100000;
 
     @Id

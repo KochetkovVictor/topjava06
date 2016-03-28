@@ -1,24 +1,40 @@
 package ru.javawebinar.topjava.model;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
  * GKislin
  * 11.01.2015.
  */
+@NamedQueries({
+        @NamedQuery(name = UserMeal.DELETE, query = "DELETE FROM UserMeal um WHERE um.user.id=:userId AND um.id=:id"),
+        @NamedQuery(name = UserMeal.GET, query = "SELECT um FROM UserMeal um  WHERE um.user.id=:userId and um.id=:id "),
+        @NamedQuery(name = UserMeal.ALL_SORTED, query = "SELECT um FROM UserMeal um WHERE um.user.id=:userId ORDER BY um.dateTime DESC"),
+        @NamedQuery(name=UserMeal.GET_BETWEEN, query="SELECT um FROM UserMeal  um WHERE um.user.id=:userId " +
+                        "AND um.dateTime<=:endDateTime and um.dateTime>=:startDateTime " +
+                        "ORDER BY um.dateTime DESC")
+})
 @Entity
-@Table(name="meals")
+@Table(name="meals", uniqueConstraints = {@UniqueConstraint(columnNames = "date_Time", name = "meals_unique_user_datetime_idx")})
 public class UserMeal extends BaseEntity {
 
-    @Column(name="date_time")
+    public static final String DELETE = "UserMeal.delete";
+    public static final String ALL_SORTED = "UserMeal.getAllSorted";
+    public static final String GET = "UserMeal.Get";
+    public static final String GET_BETWEEN = "UserMeal.GetBetween";
+
+    @Column(name="date_time", nullable=false)
     private LocalDateTime dateTime;
-    @Column
+    @Column(name="description", nullable=false)
     private String description;
-    @Column
+    @Column(name="calories")
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     public UserMeal() {
