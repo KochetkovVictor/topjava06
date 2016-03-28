@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.jpa;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 
 @Repository
+@Transactional(readOnly = true)
 public class JpaUserMealRepositoryImpl implements UserMealRepository {
 
     @PersistenceContext
@@ -44,7 +46,11 @@ public class JpaUserMealRepositoryImpl implements UserMealRepository {
 
     @Override
     public UserMeal get(int id, int userId) {
-        return em.createNamedQuery(UserMeal.GET,UserMeal.class).setParameter("userId",userId).setParameter("id",id).getSingleResult();
+        List<UserMeal> userMeals = em.createNamedQuery(UserMeal.GET, UserMeal.class)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
+                .getResultList();
+        return userMeals.size() == 0 ? null : DataAccessUtils.requiredSingleResult(userMeals);
     }
 
     @Override
