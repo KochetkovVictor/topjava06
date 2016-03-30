@@ -1,7 +1,13 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.Statement;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -14,6 +20,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -26,10 +33,14 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserMealServiceTest {
+    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(UserMealServiceTest.class);
 
     @Autowired
     protected UserMealService service;
-
+    @Rule
+    public ExpectedException exception=ExpectedException.none();
+    @Rule
+    public TimeCheckerRule tcr=new TimeCheckerRule();
     @Test
     public void testDelete() throws Exception {
         service.delete(MealTestData.MEAL1_ID, USER_ID);
@@ -54,8 +65,10 @@ public class UserMealServiceTest {
         MATCHER.assertEquals(ADMIN_MEAL, actual);
     }
 
-    @Test(expected = NotFoundException.class)
+    //@Test(expected = NotFoundException.class)
+    @Test
     public void testGetNotFound() throws Exception {
+        exception.expect(NotFoundException.class);
         service.get(MEAL1_ID, ADMIN_ID);
     }
 
@@ -66,8 +79,9 @@ public class UserMealServiceTest {
         MATCHER.assertEquals(updated, service.get(MEAL1_ID, USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test//(expected = NotFoundException.class)
     public void testNotFoundUpdate() throws Exception {
+        exception.expect(NotFoundException.class);
         UserMeal item = service.get(MEAL1_ID, USER_ID);
         service.update(item, ADMIN_ID);
     }
@@ -81,5 +95,21 @@ public class UserMealServiceTest {
     public void testGetBetween() throws Exception {
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 service.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), USER_ID));
+    }
+    class TimeCheckerRule implements TestRule
+    {
+
+        @Override
+        public Statement apply(Statement statement, Description description) {
+            return new Statement() {
+                @Override
+                public void evaluate() throws Throwable {
+                    long start = System.currentTimeMillis();
+                    statement.evaluate();
+                    long end=System.currentTimeMillis();
+                    LOG.info("Time of working is "+(end-start)+" ms.");
+                }
+            };
+        }
     }
 }
