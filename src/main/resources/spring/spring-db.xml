@@ -76,7 +76,7 @@
               p:password="${database.password}"/>
     </beans>
 
-    <!--<beans profile="postgres">
+    <beans profile="postgres">
         <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
 
         <bean id="dataSource"
@@ -85,7 +85,7 @@
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>
-    </beans>-->
+    </beans>
 
     <beans profile="jdbc">
     </beans>

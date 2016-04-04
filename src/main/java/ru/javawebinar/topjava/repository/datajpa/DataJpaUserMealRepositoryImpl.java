@@ -17,31 +17,39 @@ import java.util.List;
 public class DataJpaUserMealRepositoryImpl implements UserMealRepository{
 
     @Autowired
-    private ProxyUserMealRepository proxy;
+    private ProxyUserMealRepository proxyUserMealRepository;
 
+    @Autowired ProxyUserRepository proxyUserRepository;
 
     @Override
     public UserMeal save(UserMeal userMeal, int userId) {
-        return proxy.save(userMeal,userId);
+        userMeal.setUser(proxyUserRepository.findOne(userId));
+        if (!userMeal.isNew() && get(userMeal.getId(),userId)==null)
+        {
+            return null;
+        }
+        return proxyUserMealRepository.save(userMeal);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return proxy.delete(id,userId)!=0;
+
+        return proxyUserMealRepository.delete(id,userId)!=0;
     }
 
     @Override
     public UserMeal get(int id, int userId) {
-        return proxy.findOne(id,userId);
+
+        return proxyUserMealRepository.findOne(id,userId);
     }
 
     @Override
     public List<UserMeal> getAll(int userId) {
-        return proxy.findAll(userId, new Sort("dateTime"));
+        return proxyUserMealRepository.findAll(userId);
     }
 
     @Override
     public List<UserMeal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return proxy.getBetweenOrderByDateTime(startDate,endDate,userId);
+        return proxyUserMealRepository.getBetween(startDate,endDate,userId);
     }
 }

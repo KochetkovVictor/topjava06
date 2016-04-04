@@ -14,8 +14,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface ProxyUserMealRepository extends JpaRepository<UserMeal,Integer> {
 
-    @Query("SELECT um FROM UserMeal um WHERE um.user.id=?1")
-    List<UserMeal> findAll(int userId, Sort sort);
+    @Query("SELECT um FROM UserMeal um WHERE um.user.id=?1 ORDER BY um.dateTime DESC ")
+    List<UserMeal> findAll(int userId);
 
     @Query("SELECT um FROM UserMeal um WHERE um.id=?1 AND um.user.id=?2")
     UserMeal findOne(int id, int userId);
@@ -32,6 +32,6 @@ public interface ProxyUserMealRepository extends JpaRepository<UserMeal,Integer>
     @Query("DELETE from UserMeal um WHERE um.id=?1 AND um.user.id=?2")
     int delete(int id, int userId);
 
-    @Query("SELECT um FROM UserMeal um WHERE um.user.id=?1")
-    List<UserMeal> getBetweenOrderByDateTime(LocalDateTime startDate,LocalDateTime endDate, int userId);
+    @Query("SELECT um FROM UserMeal um WHERE um.user.id=?3 AND um.dateTime>=?1 AND um.dateTime<=?2 ORDER BY um.dateTime DESC")
+    List<UserMeal> getBetween(LocalDateTime startDate,LocalDateTime endDate, int userId);
 }
