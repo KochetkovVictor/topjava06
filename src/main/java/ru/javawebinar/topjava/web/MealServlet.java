@@ -3,10 +3,13 @@ package ru.javawebinar.topjava.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.util.TimeUtil;
 import ru.javawebinar.topjava.web.meal.UserMealRestController;
+
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -23,6 +26,7 @@ import java.util.Objects;
  * User: gkislin
  * Date: 19.08.2014
  */
+
 public class MealServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MealServlet.class);
 
@@ -32,7 +36,8 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml","spring/spring-tools.xml");
+        springContext.getEnvironment().setActiveProfiles("postgres","datajpa");
         mealController = springContext.getBean(UserMealRestController.class);
     }
 
