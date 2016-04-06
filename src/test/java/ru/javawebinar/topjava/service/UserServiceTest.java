@@ -22,7 +22,7 @@ import java.util.Collections;
 
 import static ru.javawebinar.topjava.UserTestData.*;
 
-public class UserServiceTest extends AbstractTest{
+public abstract class UserServiceTest extends AbstractTest{
 
     @Autowired
     protected UserService service;
@@ -86,5 +86,11 @@ public class UserServiceTest extends AbstractTest{
         updated.setCaloriesPerDay(330);
         service.update(updated.asUser());
         MATCHER.assertEquals(updated, service.get(USER_ID));
+    }
+    @Test
+    public void testJoinMap() throws Exception {
+
+
+        System.out.println(service.getUserWithMeal(100001));
     }
 }

@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.Profiles;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * GKislin
@@ -54,5 +56,10 @@ public class DataJpaUserMealRepositoryImpl implements UserMealRepository{
     @Override
     public List<UserMeal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return proxyUserMealRepository.getBetween(startDate,endDate,userId);
+    }
+
+    @Override
+    public List<Map<UserMeal, User>> getMealWithUser(int mealId) {
+        return proxyUserMealRepository.getMealWithUserById(mealId);
     }
 }

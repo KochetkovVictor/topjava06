@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: gkisline
@@ -69,5 +70,10 @@ public class JpaUserMealRepositoryImpl implements UserMealRepository {
                 .setParameter("userId", userId)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate).getResultList();
+    }
+
+    @Override
+    public List<Map<UserMeal, User>> getMealWithUser(int mealId) {
+        return null;
     }
 }

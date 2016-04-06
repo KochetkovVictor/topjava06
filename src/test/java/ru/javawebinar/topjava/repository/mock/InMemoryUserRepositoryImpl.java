@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +13,6 @@ import javax.annotation.PreDestroy;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -63,6 +63,11 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         return repository.values().stream().sorted(USER_COMPARATOR).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<User, List<UserMeal>>> getUserWithMeal(int userId) {
+        return null;
     }
 
     @Override

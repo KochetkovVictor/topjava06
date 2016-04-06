@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Transactional(readOnly = true)
 public interface ProxyUserMealRepository extends JpaRepository<UserMeal,Integer> {
@@ -34,4 +36,7 @@ public interface ProxyUserMealRepository extends JpaRepository<UserMeal,Integer>
 
     @Query("SELECT um FROM UserMeal um WHERE um.user.id=?3 AND um.dateTime>=?1 AND um.dateTime<=?2 ORDER BY um.dateTime DESC")
     List<UserMeal> getBetween(LocalDateTime startDate,LocalDateTime endDate, int userId);
+
+    @Query("SELECT u FROM User u JOIN ")
+    List<Map<UserMeal,User>> getMealWithUserById(int mealId);
 }

@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.model.UserMeal;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * GKislin
@@ -34,4 +36,7 @@ public interface ProxyUserRepository extends JpaRepository<User, Integer> {
     List<User> findAll(Sort sort);
 
     User getByEmail(String email);
+
+    @Query ("SELECT um FROM UserMeal um JOIN um.user u WHERE u.id=?1")
+    List<Map<User, List<UserMeal>>> getUserAndMealById(int userId);
 }

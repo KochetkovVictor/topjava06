@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * GKislin
@@ -43,5 +45,10 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         return proxy.findAll(SORT_NAME_EMAIL);
+    }
+
+    @Override
+    public List<Map<User, List<UserMeal>>> getUserWithMeal(int userId) {
+        return proxy.getUserAndMealById(userId);
     }
 }
