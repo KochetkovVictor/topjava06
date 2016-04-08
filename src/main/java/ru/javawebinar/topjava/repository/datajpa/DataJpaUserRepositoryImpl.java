@@ -48,5 +48,5 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     @Override
     public User getWithMeals(int id) {
         return proxy.getWithMeals(id);
-    }
+    };
 }
