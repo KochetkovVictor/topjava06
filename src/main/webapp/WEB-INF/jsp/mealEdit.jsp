@@ -3,11 +3,14 @@
 
 <html>
 <head>
+    <jsp:include page="fragments/headTag.jsp"/>
     <title>Meal</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 <section>
+    <jsp:include page="fragments/bodyHeader.jsp"/>
     <h2><a href="">Home</a></h2>
     <h3>Edit meal</h3>
     <hr>
@@ -29,6 +32,8 @@
         <button type="submit">Save</button>
         <button onclick="window.history.back()">Cancel</button>
     </form>
+    <jsp:include page="fragments/footer.jsp"/>
 </section>
+
 </body>
 </html>

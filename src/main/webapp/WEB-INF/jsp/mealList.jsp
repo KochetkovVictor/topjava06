@@ -4,11 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <jsp:include page="fragments/headTag.jsp"/>
     <title>Meal list</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 <section>
+    <jsp:include page="fragments/bodyHeader.jsp"/>
     <h2><a href="index.jsp">Home</a></h2>
     <h3>Meal list</h3>
     <form method="post" action="meals?action=filter">
@@ -57,6 +60,8 @@
             </tr>
         </c:forEach>
     </table>
+    <jsp:include page="fragments/footer.jsp"/>
 </section>
+
 </body>
 </html>
