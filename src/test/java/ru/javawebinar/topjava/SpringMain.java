@@ -20,7 +20,7 @@ public class SpringMain {
         // java 7 Automatic resource management
         try (GenericXmlApplicationContext appCtx = new GenericXmlApplicationContext()) {
             appCtx.getEnvironment().setActiveProfiles(Profiles.ACTIVE_DB, Profiles.DB_IMPLEMENTATION);
-            appCtx.load("spring/spring-app.xml", "spring/spring-db.xml");
+            appCtx.load("spring/spring-app.xml", "spring/spring-mvc.xml","spring/mock.xml");
             appCtx.refresh();
 
             System.out.println(Arrays.toString(appCtx.getBeanDefinitionNames()));
