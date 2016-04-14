@@ -14,8 +14,6 @@
 <body>
 
 <section>
-
-    <jsp:include page="fragments/bodyHeader.jsp"/>
     <h2><a href="index.jsp">Home</a></h2>
     <h3>Meal list</h3>
     <form method="post" action="meals/filter">

@@ -12,7 +12,7 @@
 <body>
 
 <section>
-    <jsp:include page="fragments/bodyHeader.jsp"/>
+
     <h2><a href="">Home</a></h2>
     <h3>Edit meal</h3>
     <hr>
