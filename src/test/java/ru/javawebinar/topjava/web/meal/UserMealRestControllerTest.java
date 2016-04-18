@@ -45,9 +45,10 @@ public class UserMealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL +"delete/"+ MEAL1_ID))
+        mockMvc.perform(delete(REST_URL + "delete/" + MEAL1_ID))
                 .andExpect(status().isOk())
                 .andDo(print());
+        MATCHER.contentListMatcher(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
 
     }
 
