@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.to;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +17,7 @@ public class UserMealWithExceed {
 
     private final int calories;
 
+    @JsonIgnore
     private final boolean exceed;
 
     public UserMealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
