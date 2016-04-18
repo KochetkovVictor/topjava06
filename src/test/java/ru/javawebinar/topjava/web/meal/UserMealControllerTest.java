@@ -1,7 +1,9 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
+import org.springframework.http.MediaType;
 import ru.javawebinar.topjava.LoggedUser;
+import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import static org.hamcrest.Matchers.*;
@@ -48,16 +50,17 @@ public class UserMealControllerTest extends AbstractControllerTest {
     public void testDeleteUser() throws Exception {
         for (int i = 2; i < 8; i++) {
             int id = 100000 + i;
-            mockMvc.perform(get("/meals/delete?id="+id))
+            mockMvc.perform(get("/meals/delete?id=" + id))
                     .andDo(print())
                     .andExpect(status().is3xxRedirection())
                     .andExpect(redirectedUrl("/meals"));
         }
     }
+
     @Test
     public void testEditForUpdate() throws Exception {
         for (int i = 2; i < 8; i++) {
-            int id=100000+i;
+            int id = 100000 + i;
             mockMvc.perform(get("/meals/update?id=" + id))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -65,6 +68,7 @@ public class UserMealControllerTest extends AbstractControllerTest {
                     .andExpect(forwardedUrl("/WEB-INF/jsp/mealEdit.jsp"));
         }
     }
+
     @Test
     public void testEditForCreate() throws Exception {
         mockMvc.perform(get("/meals/create"))
@@ -77,9 +81,7 @@ public class UserMealControllerTest extends AbstractControllerTest {
     @Test
     public void testUpdateOrCreate() throws Exception {
         mockMvc.perform(post("/meals"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
+                .andDo(print());
     }
 
     @Test
