@@ -1,9 +1,10 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
+
 import org.springframework.http.MediaType;
 import ru.javawebinar.topjava.LoggedUser;
-import ru.javawebinar.topjava.model.UserMeal;
+
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import static org.hamcrest.Matchers.*;
@@ -11,6 +12,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -72,12 +74,6 @@ public class UserMealControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("meal", hasProperty("calories", is(1000))))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/mealEdit.jsp"));
-    }
-
-    @Test
-    public void testUpdateOrCreate() throws Exception {
-        mockMvc.perform(post("/meals"))
-                .andDo(print());
     }
 
     @Test
