@@ -18,10 +18,6 @@ import static ru.javawebinar.topjava.MealTestData.MEAL1_ID;
 import static ru.javawebinar.topjava.MealTestData.USER_MEALS;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
-
-/**
- * Created by Kochetkov_V on 18.04.2016.
- */
 public class UserMealControllerTest extends AbstractControllerTest {
     @Test
     public void testUserList() throws Exception {

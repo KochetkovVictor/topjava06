@@ -1,20 +1,22 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
-import ru.javawebinar.topjava.web.AbstractControllerTest;
-import org.junit.Test;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.ResultActions;
-import ru.javawebinar.topjava.TestUtil;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.LoggedUser;
+import ru.javawebinar.topjava.model.UserMeal;
+import ru.javawebinar.topjava.service.UserMealService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
+
+import org.springframework.http.MediaType;
+
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
+
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserMealRestControllerTest extends AbstractControllerTest {
 
     public static final String REST_URL = "/rest/meals/";
+
+    @Autowired
+    UserMealService userMealService;
 
     @Test
     public void testGetAll() throws Exception {
@@ -55,11 +60,28 @@ public class UserMealRestControllerTest extends AbstractControllerTest {
     @Test
     public void testUpdate() throws Exception {
 
+        UserMeal updated = MEAL1;
+        updated.setDescription("Обновленная еда");
+        updated.setCalories(1111);
+        mockMvc.perform(put(REST_URL + "update/" + MEAL1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isOk());
+
+        MATCHER.assertEquals(updated, userMealService.get(MEAL1_ID, LoggedUser.id()));
     }
 
     @Test
     public void testCreateMeal() throws Exception {
+        UserMeal testUserMeal = new UserMeal(null, LocalDateTime.now(), "Тестовая еда", 555);
+        ResultActions action = mockMvc.perform(post(REST_URL+"create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(testUserMeal))).andExpect(status().isCreated());
 
+        UserMeal returned = MATCHER.fromJsonAction(action);
+        testUserMeal.setId(returned.getId());
+        MATCHER.assertEquals(testUserMeal, returned);
+        MATCHER.assertCollectionEquals(Arrays.asList(testUserMeal,MEAL6, MEAL5, MEAL4, MEAL3, MEAL2,MEAL1),userMealService.getAll(LoggedUser.id()));
     }
 
     @Test
