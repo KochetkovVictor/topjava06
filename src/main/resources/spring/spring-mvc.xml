@@ -31,17 +31,6 @@
                 <bean class="ru.javawebinar.topjava.web.json.LocalDateTimeConverter" />
             </set>
         </property>
-        <!--<property name="formatterRegistrars">
-            <set>
-                <bean class="org.springframework.format.datetime.standard.DateTimeFormatterRegistrar">
-                    <property name="dateFormatter">
-                        <bean class="org.springframework.format.datetime.standard.DateTimeFormatterFactoryBean">
-                            <property name="pattern" value="yyyy-MM-dd HH:mm"/>
-                        </bean>
-                    </property>
-                </bean>
-            </set>
-        </property>-->
     </bean>
 
     <context:component-scan base-package="ru.javawebinar.**.web"/>
