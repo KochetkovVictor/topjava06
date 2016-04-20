@@ -6,6 +6,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.service.UserMealService;
+import ru.javawebinar.topjava.util.UserMealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 
 import org.springframework.http.MediaType;
@@ -36,7 +37,7 @@ public class UserMealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentListMatcher(USER_MEALS));
+                .andExpect(MEAL_WITH_EXCEED_MATCHER.contentListMatcher(UserMealsUtil.getWithExceeded(USER_MEALS,2000)));
     }
 
     @Test

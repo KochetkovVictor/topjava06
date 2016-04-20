@@ -1,9 +1,10 @@
 package ru.javawebinar.topjava;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.javawebinar.topjava.TestUtil.ToStringModelMatcher;
 import ru.javawebinar.topjava.matcher.ModelMatcher;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
+import ru.javawebinar.topjava.to.UserMealWithExceed;
 
 import java.time.Month;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 public class MealTestData {
 
     public static final ModelMatcher<UserMeal, String> MATCHER = new ToStringModelMatcher<>(UserMeal.class);
+    public static final ModelMatcher<UserMealWithExceed,String> MEAL_WITH_EXCEED_MATCHER=new ToStringModelMatcher<>(UserMealWithExceed.class);
 
     public static final int MEAL1_ID = START_SEQ + 2;
     public static final int ADMIN_MEAL_ID = START_SEQ + 8;
