@@ -91,6 +91,6 @@ public class UserMealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentListMatcher(MEAL2, MEAL1));
+                .andExpect(MEAL_WITH_EXCEED_MATCHER.contentListMatcher(UserMealsUtil.getWithExceeded(Arrays.asList(MEAL2,MEAL1),2000)));
     }
 }
