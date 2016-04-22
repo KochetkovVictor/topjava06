@@ -1,0 +1,128 @@
+Index: src/main/resources/spring/spring-security.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/spring/spring-security.xml	(revision )
++++ src/main/resources/spring/spring-security.xml	(revision )
+@@ -0,0 +1,27 @@
++<beans:beans xmlns="http://www.springframework.org/schema/security"
++             xmlns:beans="http://www.springframework.org/schema/beans"
++             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++             xsi:schemaLocation="http://www.springframework.org/schema/beans
++	http://www.springframework.org/schema/beans/spring-beans.xsd
++	http://www.springframework.org/schema/security
++	http://www.springframework.org/schema/security/spring-security.xsd">
++
++    <http pattern="/resources/**" security="none"/>
++    <http pattern="/webjars/**" security="none"/>
++
++    <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
++        <http-basic/>
++        <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
++        <intercept-url pattern="/**" access="isAuthenticated()"/>
++        <csrf disabled="true"/>
++    </http>
++
++    <authentication-manager>
++        <authentication-provider>
++            <user-service>
++                <user name="user@yandex.ru" password="password" authorities="ROLE_USER"/>
++                <user name="admin@gmail.com" password="admin" authorities="ROLE_ADMIN"/>
++            </user-service>
++        </authentication-provider>
++    </authentication-manager>
++</beans:beans>
+\ No newline at end of file
+Index: src/main/webapp/WEB-INF/web.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/WEB-INF/web.xml	(date 1461252703000)
++++ src/main/webapp/WEB-INF/web.xml	(revision )
+@@ -36,6 +36,16 @@
+         <url-pattern>/</url-pattern>
+     </servlet-mapping>
+ 
++    <!-- Spring Security -->
++    <filter>
++        <filter-name>springSecurityFilterChain</filter-name>
++        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
++    </filter>
++    <filter-mapping>
++        <filter-name>springSecurityFilterChain</filter-name>
++        <url-pattern>/*</url-pattern>
++    </filter-mapping>
++
+     <filter>
+         <filter-name>encodingFilter</filter-name>
+         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+Index: src/main/resources/spring/spring-app.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/spring/spring-app.xml	(date 1461252703000)
++++ src/main/resources/spring/spring-app.xml	(revision )
+@@ -12,6 +12,7 @@
+         </bean>
+     -->
+     <import resource="spring-tools.xml"/>
++    <import resource="spring-security.xml"/>
+ 
+     <context:annotation-config/>
+ 
+\ No newline at end of file
+Index: src/main/resources/logback.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/logback.xml	(date 1461252703000)
++++ src/main/resources/logback.xml	(revision )
+@@ -24,7 +24,8 @@
+         </encoder>
+     </appender>
+ 
+-    <logger name="org.springframework.web" level="DEBUG"/>
++    <!--<logger name="org.springframework.web" level="DEBUG"/>-->
++    <logger name="org.springframework.security" level="debug"/>
+     <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="debug"/>
+     <logger name="ru.javawebinar.topjava" level="debug"/>
+ 
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(date 1461252703000)
++++ pom.xml	(revision )
+@@ -18,6 +18,8 @@
+ 
+         <spring-data-jpa.version>1.9.4.RELEASE</spring-data-jpa.version>
+         <spring.version>4.2.5.RELEASE</spring.version>
++        <spring-security.version>4.0.4.RELEASE</spring-security.version>
++
+         <tomcat.version>7.0.57</tomcat.version>
+ 
+         <!-- Logging -->
+@@ -147,6 +149,18 @@
+                     <groupId>org.hamcrest</groupId>
+                 </exclusion>
+             </exclusions>
++        </dependency>
++
++        <!--security-->
++        <dependency>
++            <groupId>org.springframework.security</groupId>
++            <artifactId>spring-security-web</artifactId>
++            <version>${spring-security.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.security</groupId>
++            <artifactId>spring-security-config</artifactId>
++            <version>${spring-security.version}</version>
+         </dependency>
+ 
+         <!-- Webjars (static dependencies distributed as JAR files) -->
