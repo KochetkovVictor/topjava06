@@ -32,36 +32,36 @@
                     </dl>
                     <a class="btn btn-sm btn-info" id="filter">Filter</a>
                 </form>
-                <div class="view-box">
-                    <a class="btn btn-sm btn-info" id="add"><fmt:message key="meals.add"/></a>
-
-                    <table class="table table-striped display" id="datatable">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th>Calories</th>
-                            <th></th>
-                            <th></th>
+                <hr class="view-box" aria-hidden="true">
+                <a class="btn btn-sm btn-info" id="add"><fmt:message key="meals.add"/></a>
+                <hr/>
+                <table class="table table-striped display" id="datatable">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Calories</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <c:forEach items="${mealList}" var="meal">
+                        <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.UserMealWithExceed"/>
+                        <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                            <td>
+                                    <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
+                                <%=TimeUtil.toString(meal.getDateTime())%>
+                            </td>
+                            <td>${meal.description}</td>
+                            <td>${meal.calories}</td>
+                            <td><a class="btn btn-xs btn-primary edit" id="${meal.id}">Edit</a></td>
+                            <td><a class="btn btn-xs btn-danger delete" id="${meal.id}">Delete</a></td>
                         </tr>
-                        </thead>
-                        <c:forEach items="${mealList}" var="meal">
-                            <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.UserMealWithExceed"/>
-                            <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                                <td>
-                                        <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
-                                    <%=TimeUtil.toString(meal.getDateTime())%>
-                                </td>
-                                <td>${meal.description}</td>
-                                <td>${meal.calories}</td>
-                                <td><a class="btn btn-xs btn-primary edit" id="${meal.id}">Edit</a></td>
-                                <td><a class="btn btn-xs btn-danger delete" id="${meal.id}">Delete</a></td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
+                    </c:forEach>
+                </table>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
@@ -99,7 +99,7 @@
                         <label for="date_time" class="control-label col-xs-3">Time</label>
 
                         <div class="col-xs-9">
-                            <input type="datetime" class="form-control" id="date_time" name="date_time"
+                            <input type="datetime-local" class="form-control" id="date_time" name="date_time"
                                    placeholder="Time">
                         </div>
                     </div>
@@ -115,7 +115,7 @@
     </div>
 </div>
 </body>
-<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js" aria-hidden="true"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/datetimepicker/2.5.1/jquery.datetimepicker.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.11/js/jquery.dataTables.min.js"></script>
