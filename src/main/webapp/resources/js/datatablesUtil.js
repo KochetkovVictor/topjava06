@@ -19,7 +19,6 @@ function makeEditable() {
 }
 function enable(id, chkbox) {
     var enabled = chkbox.is(":checked");
-   /* chkbox.parent().parent().css("text-decoration", enabled ? "none" : "line-through");*/
     $.ajax({
         url: ajaxUrl + id + '/enable',
         type: 'POST',
