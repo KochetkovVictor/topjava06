@@ -16,6 +16,13 @@
         <csrf disabled="true"/>
     </http>
 
+    <http pattern="/ajax/**" use-expressions="true" name="ajaxSecurityFilterChain" create-session="stateless">
+        <http-basic/>
+        <intercept-url pattern="/ajax/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <csrf disabled="true"/>
+    </http>
+
     <authentication-manager>
         <authentication-provider>
             <user-service>
