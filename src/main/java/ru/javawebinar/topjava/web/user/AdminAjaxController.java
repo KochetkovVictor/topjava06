@@ -37,4 +37,8 @@ public class AdminAjaxController extends AbstractUserController {
             super.update(user, id);
         }
     }
+    @RequestMapping(value="/{id}/enable", method = RequestMethod.POST)
+    public void enableDisable(@RequestParam("enabled") boolean enable, @PathVariable("id") int id ){
+        super.enableDisable(id, enable);
+    }
 }

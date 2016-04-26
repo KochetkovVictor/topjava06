@@ -17,7 +17,18 @@ function makeEditable() {
         failNoty(event, jqXHR, options, jsExc);
     });
 }
-
+function enable(id, chkbox) {
+    var enabled = chkbox.is(":checked");
+   /* chkbox.parent().parent().css("text-decoration", enabled ? "none" : "line-through");*/
+    $.ajax({
+        url: ajaxUrl + id + '/enable',
+        type: 'POST',
+        data: 'enabled=' + enabled,
+        success: function () {
+            successNoty(enabled ? 'Enabled' : 'Disabled');
+        }
+    });
+}
 function deleteRow(id) {
     $.ajax({
         url: ajaxUrl + id,

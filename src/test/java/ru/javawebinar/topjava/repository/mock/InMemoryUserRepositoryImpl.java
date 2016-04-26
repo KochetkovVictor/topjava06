@@ -64,6 +64,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         return repository.values().stream().sorted(USER_COMPARATOR).collect(Collectors.toList());
     }
 
+
     @Override
     public User getByEmail(String email) {
         Assert.notNull(email, "email must not be null");
