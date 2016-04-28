@@ -17,8 +17,8 @@ import java.util.Objects;
  * GKislin
  * 06.03.2015.
  */
-@Controller
-@RequestMapping(value = "/meals")
+/*@Controller
+@RequestMapping(value = "/meals")*/
 public class JspUserMealController extends AbstractUserMealController {
 
     @RequestMapping(method = RequestMethod.GET)

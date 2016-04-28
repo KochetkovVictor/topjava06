@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.service.UserMealService;
 import ru.javawebinar.topjava.service.UserService;
+import ru.javawebinar.topjava.util.UserMealsUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,5 +41,11 @@ public class RootController {
         int userId = Integer.valueOf(request.getParameter("userId"));
         LoggedUser.setId(userId);
         return "redirect:meals";
+    }
+
+    @RequestMapping(value = "/meals", method = RequestMethod.GET)
+    public String mealList(Model model) {
+        model.addAttribute("mealList", UserMealsUtil.getWithExceeded(mealService.getAll(LoggedUser.id()),2000));
+        return "mealList";
     }
 }

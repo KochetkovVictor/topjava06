@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void changeEnabled(int id, boolean enable) {
+    public void enableDisable(int id, boolean enable) {
         User user=get(id);
         user.setEnabled(enable);
         update(user);
