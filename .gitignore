@@ -1,8 +1,7 @@
 .idea
-out
 target
 *.iml
 log
-TOPJAVA_ROOT_IS_UNDEFINED
+Patches
 
 
