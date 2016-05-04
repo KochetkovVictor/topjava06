@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,7 @@ public class UserMeal extends BaseEntity {
     public static final String GET_BETWEEN = "UserMeal.getBetween";
 
     @Column(name = "date_time", nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @NotNull
     private LocalDateTime dateTime;
 
@@ -40,6 +42,7 @@ public class UserMeal extends BaseEntity {
 
     @Column(name = "calories", nullable = false)
     @Range(min = 10, max = 5000)
+    @NotNull
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
