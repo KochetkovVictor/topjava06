@@ -68,4 +68,8 @@ $(function () {
 
         "initComplete": makeEditable
     });
+    $('#filter').submit(function () {
+        updateTable();
+        return false;
+    });
 });
