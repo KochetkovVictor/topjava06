@@ -110,3 +110,17 @@ function renderDeleteBtn(data, type, row) {
     }
     return data;
 }
+
+function renderEditBtn(data, type, row) {
+    if (type == 'display') {
+        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">Edit</a>';
+    }
+    return data;
+}
+
+function renderDeleteBtn(data, type, row) {
+    if (type == 'display') {
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">Delete</a>';
+    }
+    return data;
+}

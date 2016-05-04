@@ -1,6 +1,7 @@
+
 package ru.javawebinar.topjava.web.meal;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,8 +12,8 @@ import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.to.UserMealWithExceed;
 
 import java.net.URI;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class UserMealRestController extends AbstractUserMealController {
         return new ResponseEntity<>(created, httpHeaders, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/between", method = RequestMethod.GET)
     public List<UserMealWithExceed> getBetween(
             @RequestParam(value = "startDate", required = false) LocalDate startDate, @RequestParam(value = "startTime", required = false) LocalTime startTime,
             @RequestParam(value = "endDate", required = false) LocalDate endDate, @RequestParam(value = "endTime", required = false) LocalTime endTime) {
