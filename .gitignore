@@ -1,8 +1,8 @@
 .idea
-out
 target
 *.iml
 log
-
+Patches
+config/Topjava-soapui-project.xml
 
 
