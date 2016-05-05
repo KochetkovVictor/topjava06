@@ -32,7 +32,7 @@ public class UserMeal extends BaseEntity {
     public static final String GET_BETWEEN = "UserMeal.getBetween";
 
     @Column(name = "date_time", nullable = false)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
     @NotNull
     private LocalDateTime dateTime;
 

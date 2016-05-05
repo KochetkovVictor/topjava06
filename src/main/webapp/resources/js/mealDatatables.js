@@ -57,19 +57,19 @@ $(function () {
         ],
         "createdRow": function (row, data, dataIndex) {
             if (data.exceed) {
-                $(row).addClass( 'exceeded' );
+                $(row).addClass('exceeded');
             }
-            else
-            {
-                $(row).addClass( 'normal' );
+            else {
+                $(row).addClass('normal');
             }
 
         },
-
-        "initComplete": makeEditable
-    });
-    $('#filter').submit(function () {
-        updateTable();
-        return false;
+        "initComplete": function () {
+            $('#filter').submit(function () {
+                updateTable();
+                return false;
+            });
+            makeEditable();
+        }
     });
 });
