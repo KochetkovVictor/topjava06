@@ -56,7 +56,7 @@ $(function () {
             ]
         ],
         "createdRow": function (row, data, dataIndex) {
-            if (data.exceeded) {
+            if (data.exceed) {
                 $(row).addClass( 'exceeded' );
             }
             else
