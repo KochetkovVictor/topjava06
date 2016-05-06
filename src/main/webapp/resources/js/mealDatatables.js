@@ -1,4 +1,3 @@
-
 var ajaxUrl = 'ajax/profile/meals/';
 var datatableApi;
 
@@ -7,7 +6,17 @@ function updateTable() {
         updateTableByData(data);
     });
 }
-
+function updateTable() {
+    $.ajax({
+        type: "POST",
+        url: ajaxUrl + 'filter',
+        data: $('#filter').serialize(),
+        success: function (data) {
+            updateTableByData(data);
+        }
+    });
+    return false;
+}
 $(function () {
     datatableApi = $('#datatable').DataTable({
         "ajax": {
@@ -21,36 +30,12 @@ $(function () {
                 "data": "dateTime"
             },
             {
-                "data": "email",
-                "render": function (data, type, row) {
-                    if (type == 'display') {
-                        return '<a href="mailto:' + data + '">' + data + '</a>';
-                    }
-                    return data;
-                }
+                "data": "description"
             },
             {
-                "data": "roles"
+                "data": "calories"
             },
-            {
-                "data": "enabled",
-                "render": function (data, type, row) {
-                    if (type == 'display') {
-                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
-                    }
-                    return data;
-                }
-            },
-            {
-                "data": "registered",
-                "render": function (date, type, row) {
-                    if (type == 'display') {
-                        var dateObject = new Date(date);
-                        return '<span>' + dateObject.toISOString().substring(0, 10) + '</span>';
-                    }
-                    return date;
-                }
-            },
+
             {
                 "orderable": false,
                 "defaultContent": "",
@@ -69,10 +54,16 @@ $(function () {
             ]
         ],
         "createdRow": function (row, data, dataIndex) {
-            if (!data.enabled) {
-                $(row).css("text-decoration", "line-through");
-            }
+            $(row).addClass(data.exceed ? 'exceeded' : 'normal');
         },
-        "initComplete": makeEditable
+
+        "initComplete": function () {
+            $('#filter').submit(function () {
+                updateTable();
+                return false;
+            });
+            makeEditable();
+        }
     });
-});
+})
+;

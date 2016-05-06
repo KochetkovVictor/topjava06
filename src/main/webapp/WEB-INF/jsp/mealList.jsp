@@ -60,26 +60,12 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <c:forEach items="${mealList}" var="meal">
-                        <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.UserMealWithExceed"/>
-                        <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                            <td>
-                                    <%--<fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>--%>
-                                    <%--<fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm" />--%>
-                                <%=TimeUtil.toString(meal.getDateTime())%>
-                            </td>
-                            <td>${meal.description}</td>
-                            <td>${meal.calories}</td>
-                            <td><a class="btn btn-xs btn-primary">Edit</a></td>
-                            <td><a class="btn btn-xs btn-danger" onclick="deleteRow(${meal.id})">Delete</a></td>
-                        </tr>
-                    </c:forEach>
                 </table>
             </div>
         </div>
     </div>
 </div>
-</section>
+
 <jsp:include page="fragments/footer.jsp"/>
 
 <div class="modal fade" id="editRow">
@@ -97,8 +83,8 @@
                         <label for="datetime" class="control-label col-xs-3">Date</label>
 
                         <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="datetime"
-                                   name="datetime" placeholder="Date">
+                            <input type="datetime-local" class="form-control" id="dateTime"
+                                   name="dateTime" placeholder="Date">
                         </div>
                     </div>
                     <div class="form-group">
@@ -134,59 +120,5 @@
 <script type="text/javascript" src="webjars/datatables/1.10.11/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
 <script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
-<script type="text/javascript">
-    var ajaxUrl = 'ajax/profile/meals/';
-    var datatableApi;
-
-    function updateTable() {
-        $.ajax({
-            type: "POST",
-            url: ajaxUrl + 'filter',
-            data: $('#filter').serialize(),
-            success: function (data) {
-                updateTableByData(data);
-            }
-        });
-        return false;
-    }
-
-    $(function () {
-        datatableApi = $('#datatable').DataTable(
-                {
-                    "paging": false,
-                    "info": true,
-                    "columns": [
-                        {
-                            "data": "dateTime"
-                        },
-                        {
-                            "data": "description"
-                        },
-                        {
-                            "data": "calories"
-                        },
-                        {
-                            "defaultContent": "Edit",
-                            "orderable": false
-                        },
-                        {
-                            "defaultContent": "Delete",
-                            "orderable": false
-                        }
-                    ],
-                    "order": [
-                        [
-                            0,
-                            "desc"
-                        ]
-                    ]
-                });
-
-        $('#filter').submit(function () {
-            updateTable();
-            return false;
-        });
-        makeEditable();
-    });
-</script>
+<script type="text/javascript" src="resources/js/mealDatatables.js"></script>
 </html>
