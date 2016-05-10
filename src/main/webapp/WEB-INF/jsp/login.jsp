@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -9,7 +10,7 @@
     <div class="container">
         <div class="navbar-header navbar-brand"><fmt:message key="app.title"/></div>
         <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" role="form" action="spring_security_check" method="post">
+            <form:form class="navbar-form navbar-right" role="form" action="spring_security_check" method="post">
                 <div class="form-group">
                     <input type="text" placeholder="Email" class="form-control" name='username'>
                 </div>
@@ -17,7 +18,7 @@
                     <input type="password" placeholder="Password" class="form-control" name='password'>
                 </div>
                 <button type="submit" class="btn btn-success"><fmt:message key="app.login"/></button>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>
@@ -40,6 +41,7 @@
 
         <p>Admin login: <b>admin@gmail.com / admin</b></p>
 
+        <p><a class="btn btn-primary btn-lg" role="button" href="register"><fmt:message key="app.register"/> &raquo;</a></p>
         <p>Стек технологий: <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
             <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html">Spring MVC</a>,
             <a href="http://projects.spring.io/spring-data-jpa/">Spring Data JPA</a>,
