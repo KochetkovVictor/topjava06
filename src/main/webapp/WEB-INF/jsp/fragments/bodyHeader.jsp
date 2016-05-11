@@ -16,8 +16,24 @@
                     </sec:authorize>
                     <a class="btn btn-info" role="button" href="profile">${userTo.name} profile</a>
                     <input type="submit" class="btn btn-primary" value="<fmt:message key="app.logout"/>">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                            ru
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a onclick="show('en')">English</a></li>
+                            <li><a onclick="show('ru')">Русский</a></li>
+                        </ul>
+                    </li>
                 </sec:authorize>
             </form:form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    function show(lang) {
+        window.location.href = window.location.href.split('?')[0] + '?lang=' + lang;
+    }
+</script>
