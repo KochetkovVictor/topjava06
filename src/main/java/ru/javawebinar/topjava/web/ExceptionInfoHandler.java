@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -13,6 +14,8 @@ import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ValidationException;
+
 
 /**
  * User: gkislin
@@ -34,7 +37,8 @@ public interface ExceptionInfoHandler {
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     default ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-        return logAndGetErrorInfo(req, e);
+        Exception exc=new Exception("User with this email already present in application.");
+        return logAndGetErrorInfo(req, exc);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -48,5 +52,13 @@ public interface ExceptionInfoHandler {
     default ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e) {
         LOG.error("Exception at request " + req.getRequestURL());
         return new ErrorInfo(req.getRequestURL(), e);
+    }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    @Order(Ordered.HIGHEST_PRECEDENCE + 2)
+    default ErrorInfo conflict(HttpServletRequest request, ConstraintViolationException e) {
+        return logAndGetErrorInfo(request, e);
     }
 }

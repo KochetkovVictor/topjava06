@@ -11,6 +11,7 @@ import ru.javawebinar.topjava.to.UserMealWithExceed;
 import ru.javawebinar.topjava.web.ExceptionInfoHandler;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -46,7 +47,7 @@ public class UserMealAjaxController extends AbstractUserMealController implement
             // TODO change to exception handler
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-            return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new ValidationException(sb.toString());
         }
         if (mealTo.getId() == 0) {
             super.create(createFromTo(mealTo));
