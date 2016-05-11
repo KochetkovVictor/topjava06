@@ -55,10 +55,10 @@ public interface ExceptionInfoHandler {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler(ValidationException.class)
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE + 2)
-    default ErrorInfo conflict(HttpServletRequest request, ConstraintViolationException e) {
+    default ErrorInfo conflict(HttpServletRequest request, ValidationException e) {
         return logAndGetErrorInfo(request, e);
     }
 }
